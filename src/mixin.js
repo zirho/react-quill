@@ -18,20 +18,15 @@ var QuillMixin = {
 	},
 
 	hookEditor: function(editor) {
-		// Expose the editor on change events via a weaker,
-		// unprivileged proxy object that does not allow
-		// accidentally modifying editor state.
-		var unprivilegedEditor = this.makeUnprivilegedEditor(editor);
-
 		this.handleTextChange = function(delta, oldDelta, source) {
 			if (this.onEditorChangeText) {
 				this.onEditorChangeText(
 					editor.root.innerHTML, delta, source,
-					unprivilegedEditor
+					editor
 				);
 				this.onEditorChangeSelection(
 					editor.getSelection(), source,
-					unprivilegedEditor
+					editor
 				);
 			}
 		}.bind(this);
@@ -40,7 +35,7 @@ var QuillMixin = {
 			if (this.onEditorChangeSelection) {
 				this.onEditorChangeSelection(
 					range, source,
-					unprivilegedEditor
+					editor
 				);
 			}
 		}.bind(this);
